@@ -1,11 +1,11 @@
 public class LinkedNode extends Node {
-    private Node next;
+    private LinkedNode next;
 
     public LinkedNode(float value) {
         super(value);
     }
 
-    public Node getNext() {
+    public LinkedNode getNext() {
         return next;
     }
 

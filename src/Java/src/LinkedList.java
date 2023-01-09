@@ -1,54 +1,99 @@
 public class LinkedList {
     public int length;
-    private LinkedNode first;
-    private LinkedNode last;
+    private LinkedNode head;
+    private LinkedNode tail;
 
     public LinkedList() {
-        this.length = 0;
+        length = 0;
     }
 
-    public LinkedNode getFirst() {
-        return first;
+    private boolean isListEmpty() {
+        if (getLength() != 0) return true;
+        return false;
     }
 
-    public LinkedNode getLast() {
-        return last;
+    public int getLength() {
+        return length;
     }
 
-    public void setFirst(LinkedNode first) {
-        this.first = first;
+    private void increaseLength() {
+        length++;
     }
 
-    public void setLast(LinkedNode last) {
-        this.last = last;
+    private void decreaseLength() {
+        length--;
+    }
+
+    public LinkedNode getHead() {
+        return head;
+    }
+
+    public LinkedNode getTail() {
+        return tail;
+    }
+
+    private void setHead(LinkedNode head) {
+        this.head = head;
+    }
+
+    private void setTail(LinkedNode tail) {
+        this.tail = tail;
     }
 
     public void push(float value) {
-        LinkedNode newLinkedNode = new LinkedNode(value);
-
-        if (this.getFirst() != null) {
-            this.getLast().setNext(newLinkedNode);
-
-        } else this.setFirst(newLinkedNode);
-        
-        this.setLast(newLinkedNode);
-    }
-    
-    public void add(float value, int index) {
-        LinkedNode newLinkedNode = new LinkedNode(value);
-        LinkedNode previousNode = this.getFirst();
-        LinkedNode currentNode = this.getFirst();
-        int steps = 0;
-        while (steps <= index) {
-               if(steps != index) {
-                   previousNode = currentNode;
-                   currentNode = currentNode.getNext();
-                   steps++;
-               } else {
-                    previousNode.setNext(newLinkedNode);
-                    newLinkedNode.setNext(currentNode);
-                   break;
-               }
+        LinkedNode newTail = new LinkedNode(value);
+        if (getLength() != 0) {
+            newTail.setPrevious(getTail());
+            getTail().setNext(newTail);
+        } else {
+            setHead(newTail);
         }
+        setTail(newTail);
+        increaseLength();
+    }
+
+    public void pull() {
+        if (!isListEmpty()) {
+            if (getLength() > 1) {
+                LinkedNode newTail = getTail().getPrevious();
+                newTail.setNext(null);
+                setTail(newTail);
+            } else {
+                setHead(null);
+                setTail(null);
+            }
+            decreaseLength();
+        }
+    }
+
+    public void add(float value, int index) {
+        int lastIndex = (getLength() - 1);
+        LinkedNode newLinkedNode = new LinkedNode(value);
+        LinkedNode currentNode;
+        if (index > 0 && index != lastIndex) {
+            currentNode = getHead();
+            for (int i = 0; i < index; i++) {
+                currentNode = currentNode.getNext();
+            }
+
+            LinkedNode previousNode = currentNode.getPrevious();
+            LinkedNode nextNode = currentNode.getNext();
+            previousNode.setNext(newLinkedNode);
+            nextNode.setPrevious(newLinkedNode);
+            newLinkedNode.setPrevious(previousNode);
+            newLinkedNode.setNext(currentNode);
+        }
+        else {
+            if(index != lastIndex) {
+                currentNode = getHead();
+                newLinkedNode.setNext(currentNode);
+                currentNode.setPrevious(newLinkedNode);
+                setHead(newLinkedNode);
+            } else {
+                push(newLinkedNode.getValue());
+                return;
+            }
+        }
+        increaseLength();
     }
 }

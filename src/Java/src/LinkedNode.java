@@ -1,36 +1,36 @@
 public class LinkedNode extends Node {
+    private LinkedNode _prevNode;
+    private int _index;
+    private LinkedNode _nextNode;
 
-
-    public int getIndex() {
-        return index;
+    public LinkedNode(int data, int index) {
+        super(data);
+        _prevNode = null;
+        _index = index;
+        _nextNode = null;
     }
 
-    public void setIndex(int index) {
-        this.index = index;
+    public void prevNode(LinkedNode linkedNode) {
+        _prevNode = linkedNode;
     }
 
-    private int index;
-    private LinkedNode previous;
-    private LinkedNode next;
-
-    public LinkedNode(float value) {
-        super(value);
+    public LinkedNode prevNode() {
+        return _prevNode;
     }
 
-    public LinkedNode getPrevious() {
-        return previous;
+    public void index(int index) {
+        _index = index;
     }
 
-    public LinkedNode getNext() {
-        return next;
+    public int index() {
+        return _index;
     }
 
-    public void setPrevious(LinkedNode previous) {
-        this.previous = previous;
+    public void nextNode(LinkedNode linkedNode) {
+        _nextNode = linkedNode;
     }
 
-    public void setNext(LinkedNode next) {
-        this.next = next;
+    public LinkedNode nextNode() {
+        return _nextNode;
     }
-
 }

@@ -5,11 +5,11 @@ import TLinkedNodeIndex from "./types/TLinkedNodeIndex.ts";
 
 
 export default class LinkedNode extends Node {
-    private _prevNode: TLinkedNode;
+    private _prevNode?: TLinkedNode;
 
     private _index: TLinkedNodeIndex;
 
-    private _nextNode: TLinkedNode;
+    private _nextNode?: TLinkedNode;
 
     constructor(data: any) {
         super(data);
@@ -23,7 +23,7 @@ export default class LinkedNode extends Node {
     }
 
     get prevNode() {
-        return this._nextNode;
+        return this._prevNode;
     }
 
     set index(index: TLinkedNodeIndex) {

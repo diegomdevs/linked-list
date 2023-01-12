@@ -1,15 +1,15 @@
 public class Node {
-    private float value;
-    public Node(float value) {
-        this.value = value;
+    private int _data;
+
+    public Node(int data) {
+        _data = data;
     }
 
-    public void setValue(float value) {
-        this.value = value;
+    public void data(int data) {
+        _data = data;
     }
 
-    public float getValue() {
-        return value;
+    public int data() {
+        return _data;
     }
-
 }

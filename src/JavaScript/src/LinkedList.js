@@ -7,24 +7,24 @@ export default class LinkedList {
     this._last = null;
   }
 
-  set length(length) {
-    this._length = length;
+  set length(newLength) {
+    this._length = newLength;
   }
 
   get length() {
     return this._length;
   }
 
-  set first(linkedNode) {
-    this._first = linkedNode;
+  set first(newFirst) {
+    this._first = newFirst;
   }
 
   get first() {
     return this._first;
   }
 
-  set last(linkedNode) {
-    this._last = linkedNode;
+  set last(newLast) {
+    this._last = newLast;
   }
 
   get last() {
@@ -36,6 +36,11 @@ export default class LinkedList {
       throw new Error("There are no elements in the list.");
     }
   }
+
+  addFirst(newFirstData) {
+    const newFirst = new LinkedNode(newFirstData);
+  }
+
   /**
    * - Si la lista linkeada esta vacia:
    *  1. Setear el item como first.
@@ -47,7 +52,7 @@ export default class LinkedList {
    * - Si todos los casos se cumplen:
    *  1. Incrementar el length.
    */
-  push(data) {
+  addLast(data) {
     const newLinkedNode = new LinkedNode(data, this.length);
 
     if (this.length > 0) {
@@ -130,6 +135,7 @@ export default class LinkedList {
    */
   remove(index) {
     try {
+      this.isListEmpty();
       if (index === 0) {
         this.removeFirst();
         return;

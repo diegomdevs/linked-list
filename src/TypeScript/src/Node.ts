@@ -1,11 +1,13 @@
+import TNodeData from "./types/TNodeData.ts";
+
 export default class Node {
-    constructor(private _data: any) {}
+  constructor(private _data: TNodeData) {}
 
-    set data(data: any) {
-        this._data = data;
-    }
+  set data(data: TNodeData) {
+    this._data = data;
+  }
 
-    get data() {
-        return this._data;
-    }
+  get data() {
+    return this._data;
+  }
 }

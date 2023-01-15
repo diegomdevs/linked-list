@@ -1,4 +1,4 @@
 import LinkedNode from "../LinkedNode.ts";
 
-type TLinkedNode = LinkedNode; 
+type TLinkedNode = LinkedNode | null;
 export default TLinkedNode;

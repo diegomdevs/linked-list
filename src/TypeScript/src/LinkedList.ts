@@ -1,16 +1,14 @@
 import LinkedNode from "./LinkedNode.ts";
 import TLinkedNode from "./types/TLinkedNode.ts";
 import TLinkedNodeIndex from "./types/TLinkedNodeIndex.ts";
+import TNodeData from "./types/TNodeData.ts";
 export default class LinkedList {
   private _length: number;
   private _first: TLinkedNode;
-  private _last: TLinkedNode ;
+  private _last: TLinkedNode;
 
   constructor() {
-    const initialLinkedNode = new LinkedNode(undefined);
     this._length = 0;
-    this._first = initialLinkedNode;
-    this._last = initialLinkedNode;
   }
 
   set length(length: number) {
@@ -37,15 +35,17 @@ export default class LinkedList {
     return this._last;
   }
 
-  push(data: any) {
+  push(data: TNodeData) {
     const newLinkedNode = new LinkedNode(data);
+
     if (this.length != 0) {
       newLinkedNode.prevNode = this.last;
     } else {
       this.first = newLinkedNode;
     }
+
     this.last = newLinkedNode;
-    this.length = ++this.length;
+    this.length++;
   }
   /**
    * - Si la lista tiene 0 elementos:
@@ -58,7 +58,7 @@ export default class LinkedList {
    *    1. Setear como top al nodo previo del last.
    *    2. Eliminar el nodo siguiente del nuevo last.
    *    3. Decrementar el length de la lista.
-   * - 
+   * -
    */
   removeLast() {
     if (!this.length) {
@@ -66,7 +66,6 @@ export default class LinkedList {
       if (this.length > 1) {
         this.last = this.last.prevNode;
       } else {
-        
       }
       this.length = this.length--;
     }
@@ -84,10 +83,7 @@ export default class LinkedList {
    *    1. Con la data ingresada se crea el nodo a ingresar.
    *    2. Se setea como el nodo como next del last.
    *    3. Se setea el nodo como last de la lista.
-   *  
-   *  
    */
   add(data: any, index: TLinkedNodeIndex) {
-    
   }
 }

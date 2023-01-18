@@ -1,5 +1,4 @@
 import LinkedNode from "./LinkedNode.js";
-
 export default class LinkedList {
   constructor() {
     this._length = 0;
@@ -7,156 +6,134 @@ export default class LinkedList {
     this._last = null;
   }
 
-  set length(newLength) {
-    this._length = newLength;
+  set length(value) {
+    this._length = value;
   }
 
   get length() {
     return this._length;
   }
 
-  set first(newFirst) {
-    this._first = newFirst;
+  set first(linkedNode) {
+    this._first = linkedNode;
   }
 
   get first() {
     return this._first;
   }
 
-  set last(newLast) {
-    this._last = newLast;
+  set last(linkedNode) {
+    this._last = linkedNode;
   }
 
   get last() {
     return this._last;
   }
 
-  isListEmpty() {
-    if (this.length <= 0) {
-      throw new Error("There are no elements in the list.");
+  isLinkedListEmpty() {
+    if (this.length === 0) {
+      throw new Error("The list is empty!");
     }
   }
 
-  addFirst(newFirstData) {
-    const newFirst = new LinkedNode(newFirstData);
-  }
-
-  /**
-   * - Si la lista linkeada esta vacia:
-   *  1. Setear el item como first.
-   *  2. Setear el item como last.
-   * - Si la longitud de la lista es mayor a 1:
-   *  1. Setear el item como el nextNode del actual last.
-   *  2. Setear el last como el prevNode del item.
-   *  3. Setear el item como last.
-   * - Si todos los casos se cumplen:
-   *  1. Incrementar el length.
-   */
-  addLast(data) {
-    const newLinkedNode = new LinkedNode(data, this.length);
+  addFirst(data) {
+    let linkedNode = new LinkedNode(data);
 
     if (this.length > 0) {
-      newLinkedNode.prevNode = this.last;
-      this.last.nextNode = newLinkedNode;
-    } else {
-      this.first = newLinkedNode;
-    }
+      this.first.prevLinkedNode = linkedNode;
+      linkedNode.nextLinkedNode = this.first;
+    } else this.last = linkedNode;
 
-    this.last = newLinkedNode;
-    this.length = this.length + 1;
+    this.first = linkedNode;
+
+    this.length++;
   }
 
-  /**
-   * - Si la lista no tiene ningun elemento:
-   *  1. Arrojar error.
-   * - Si la lista tiene 1 elemento:
-   *  1. Eliminar el first.
-   *  2. Eliminar el last.
-   * - Si la lista tiene mas de 1 elemento:
-   *  1. Setear el next node del actual first como first.
-   *  2. Setear como null el prev node del actual first.
-   * - Si no ocurre ningun error:
-   *  1. Decrementar el length de la lista.
-   */
   removeFirst() {
     try {
-      this.isListEmpty();
-
-      if (this.length < 2) {
-        this.first = null;
-        this.last = null;
+      this.isLinkedListEmpty();
+      if (this.length > 1) {
+        this.first.nextLinkedNode.prevLinkedNode = null;
+        this.first = this.first.nextLinkedNode;
       } else {
-        this.first = this.first.nextNode;
-        this.first.prevNode = null;
+        this.first = null, this.last = null;
       }
 
-      this.length = this.length - 1;
+      this.length--;
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
     }
   }
 
-  /**
-   * - Si la lista no tiene ningun elemento:
-   *  1. Arrojar error.
-   * - Si la lista tiene 1 elemento:
-   *  1. Eliminar el first.
-   *  2. Eliminar el last.
-   * - Si la lista tiene mas de 1 elemento:
-   *  1. Setear como last el nodo previo del actual last.
-   *  2. Setear el next nodo del actual last como null.
-   * - Si todos los casos se cumplen se decrementa el length.
-   */
+  addLast(data) {
+    const linkedNode = new LinkedNode(data);
+
+    if (this.length > 0) {
+      linkedNode.prevLinkedNode = this.last;
+      this.last.nextLinkedNode = linkedNode;
+    } else this.first = linkedNode;
+
+    this.last = linkedNode;
+
+    this.length++;
+  }
+
   removeLast() {
-    try {
-      this.isListEmpty();
+    this.isLinkedListEmpty();
 
-      if (this.length < 2) {
-        this.first = null;
-        this.last = null;
-      } else {
-        this.last = this.last.prevNode;
-        this.last.nextNode = null;
+    if (this.length > 1) {
+      this.last.prevLinkedNode.nextLinkedNode = null;
+      this.last = this.last.prevLinkedNode;
+    } else {
+      this.first = null, this.last = null;
+    }
+
+    this.length--;
+  }
+
+  add(data, index) {
+    if (this.length == 0) this.addFirst(data);
+    else {
+      const linkedNode = new LinkedNode(data);
+
+      let currentNode = this.first;
+
+      for (let i = 0; i < index; i++) {
+        if (i == index) {
+          linkedNode.prevLinkedNode = currentNode.prevLinkedNode;
+          linkedNode.nextLinkedNode = currentNode;
+          currentNode.prevLinkedNode.nextLinkedNode = linkedNode;
+          currentNode.prevLinkedNode = linkedNode;
+
+          this.length++;
+        } else currentNode = currentNode.nextLinkedNode;
       }
-
-      this.length = this.length - 1;
-    } catch (error) {
-      console.log(error.message);
     }
   }
 
-  /**
-   * - Si el index es igual a la posicion del first:
-   *  1. Ejecutar el metodo removeFirst.
-   * - Si el index es igual a la posivion del last:
-   *  1. Ejecutar el metodo removeLast.
-   * - Si ninguna de las condiciones no se cumple:
-   *  1.
-   */
   remove(index) {
     try {
-      this.isListEmpty();
-      if (index === 0) {
+      this.isLinkedListEmpty();
+      if (index == 0) {
         this.removeFirst();
-        return;
-      }
-      if (index === this.length - 1) {
-        this.removeLast();
-        return;
-      }
-      let currentNode = this.first;
-      for (let i = 0; i < this.length; i++) {
-        if ((index - i) === 1) {
-          currentNode.nextNode.nextNode.prevNode = currentNode;
-          currentNode.nextNode = currentNode.nextNode.nextNode;
-          currentNode.nextNode.index = index;
-          this.length = this.length - 1;
-          break;
+      } else {
+        if (index == (this.length - 1)) {
+          this.removeLast();
+        } else {
+          let currentNode = this.first;
+          for (let i = 0; i <= index; i++) {
+            if (i === index) {
+              currentNode.prevLinkedNode.nextLinkedNode =
+                currentNode.nextLinkedNode;
+              currentNode.nextLinkedNode.prevLinkedNode =
+                currentNode.prevLinkedNode;
+            } else currentNode = currentNode.nextLinkedNode;
+          }
+          this.length--;
         }
-        currentNode = currentNode.nextNode;
       }
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
     }
   }
 }

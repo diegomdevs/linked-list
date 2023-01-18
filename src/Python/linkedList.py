@@ -50,7 +50,7 @@ class LinkedList:
         """
 
     def _add_first(self, data):
-        new_first = _LinkedNode(data, self._length)
+        new_first = _LinkedNode(data, 0)
 
         if self._length > 0:
             self._first._prev_node = new_first
@@ -125,6 +125,7 @@ class LinkedList:
     - Si no ocurre ningun error:
         1. Decrementarle 1 a la longitud.
     """
+
     def _remove_last(self):
         self._is_linked_list_empty()
 
@@ -151,6 +152,7 @@ class LinkedList:
         4. Setar el nodo actual como nodo siguiente del nodo previo del nodo actual.
         5. Setear el nuevo nodo como nodo previo del nodo acutal.
     """
+
     def _add(self, data, index):
         if self._length == 0:
             self._add_first(data)
@@ -192,6 +194,7 @@ class LinkedList:
     - Si no hay ningun error:
         1. Decrementarle 1 a la longitud.
     """
+
     def _remove(self, index):
         self._is_linked_list_empty()
 
@@ -212,10 +215,3 @@ class LinkedList:
                             current_node = current_node._next_node
 
                     self._length = self._length - 1
-
-
-
-
-
-
-
